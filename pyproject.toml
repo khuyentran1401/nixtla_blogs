@@ -52,6 +52,11 @@ line-length = 88
 ignore = ["E501", "B018"]
 select = ["B","C","E","F","W","B9", "I", "Q"]
 
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "tab"
+skip-magic-trailing-comma = false
+
 [tool.ruff.lint.mccabe]
 max-complexity = 10
 

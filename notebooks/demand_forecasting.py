@@ -20,6 +20,7 @@ app = marimo.App(app_title="Demand Forecasting")
 @app.cell
 def _():
     import marimo as mo
+
     return (mo,)
 
 
@@ -30,6 +31,7 @@ def _():
     from nixtla import NixtlaClient
     from utilsforecast.evaluation import evaluate
     from utilsforecast.losses import mae
+
     return NixtlaClient, evaluate, mae, np, pd
 
 
@@ -56,7 +58,9 @@ def _(mo):
 
 @app.cell
 def _(pd):
-    sales_data = pd.read_csv("https://raw.githubusercontent.com/Nixtla/transfer-learning-time-series/main/datasets/m5_sales_exog_small.csv")
+    sales_data = pd.read_csv(
+        "https://raw.githubusercontent.com/Nixtla/transfer-learning-time-series/main/datasets/m5_sales_exog_small.csv"
+    )
     sales_data["ds"] = pd.to_datetime(sales_data["ds"])
     sales_data.head()
     return (sales_data,)
@@ -67,7 +71,6 @@ def _(client, sales_data):
     client.plot(
         sales_data,
         max_insample_length=365,
-
     )
     return
 
@@ -190,7 +193,14 @@ def _(mo):
 
 @app.cell
 def _(client, test_data, untransformed_forecast):
-    client.plot(test_data, untransformed_forecast, models=["TimeGPT"], level=[80], time_col="ds", target_col="y")
+    client.plot(
+        test_data,
+        untransformed_forecast,
+        models=["TimeGPT"],
+        level=[80],
+        time_col="ds",
+        target_col="y",
+    )
     return
 
 
@@ -198,16 +208,24 @@ app._unparsable_cell(
     r"""
     mae(df=)
     """,
-    name="_"
+    name="_",
 )
 
 
 @app.cell
 def _(evaluate, mae, pd, test_data, untransformed_forecast):
     untransformed_forecast["ds"] = pd.to_datetime(untransformed_forecast["ds"])
-    merged_results = pd.merge(test_data, untransformed_forecast, "left", ["unique_id", "ds"])
+    merged_results = pd.merge(
+        test_data, untransformed_forecast, "left", ["unique_id", "ds"]
+    )
 
-    model_evaluation = evaluate(merged_results, metrics=[mae], models=["TimeGPT"], target_col="y", id_col="unique_id")
+    model_evaluation = evaluate(
+        merged_results,
+        metrics=[mae],
+        models=["TimeGPT"],
+        target_col="y",
+        id_col="unique_id",
+    )
     model_metrics = model_evaluation.groupby("metric")["TimeGPT"].mean()
     model_metrics
     return (merged_results,)
@@ -221,7 +239,17 @@ def _(mo):
 
 @app.cell
 def _(client, train_data):
-    raw_finetuned = client.forecast(df=train_data, h=28, level=[80], finetune_steps=10, finetune_loss="mae", model="timegpt-1-long-horizon", time_col="ds", target_col="y", id_col="unique_id")
+    raw_finetuned = client.forecast(
+        df=train_data,
+        h=28,
+        level=[80],
+        finetune_steps=10,
+        finetune_loss="mae",
+        model="timegpt-1-long-horizon",
+        time_col="ds",
+        target_col="y",
+        id_col="unique_id",
+    )
     return (raw_finetuned,)
 
 
@@ -235,9 +263,19 @@ def _(raw_finetuned, reverse_log_transform):
 
 @app.cell
 def _(evaluate, mae, merged_results, untransformed_finetuned):
-    merged_results["TimeGPT_finetuned"] = untransformed_finetuned["TimeGPT_finetuned"].values
-    final_evaluation = evaluate(merged_results, metrics=[mae], models=["TimeGPT", "TimeGPT_finetuned"], target_col="y", id_col="unique_id")
-    final_metrics = final_evaluation.groupby("metric")[["TimeGPT", "TimeGPT_finetuned"]].mean()
+    merged_results["TimeGPT_finetuned"] = untransformed_finetuned[
+        "TimeGPT_finetuned"
+    ].values
+    final_evaluation = evaluate(
+        merged_results,
+        metrics=[mae],
+        models=["TimeGPT", "TimeGPT_finetuned"],
+        target_col="y",
+        id_col="unique_id",
+    )
+    final_metrics = final_evaluation.groupby("metric")[
+        ["TimeGPT", "TimeGPT_finetuned"]
+    ].mean()
     final_metrics
     return
 
