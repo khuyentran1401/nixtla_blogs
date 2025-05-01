@@ -7,6 +7,7 @@
 #     "numpy==2.2.5",
 #     "openai==1.76.2",
 #     "pandas==2.2.3",
+#     "plotly==6.0.1",
 #     "utilsforecast==0.2.12",
 # ]
 # ///
@@ -91,18 +92,12 @@ def _(np, sales_data):
 
 @app.cell
 def _(client, log_transformed_data, sales_data):
-    import matplotlib.pyplot as plt
-
-    # Create a single figure and axes
-    plot_fig, plot_ax = plt.subplots(figsize=(10, 5))
-
     # Plot the original data
-    client.plot(
+    ax = client.plot(
         sales_data,
         max_insample_length=30,
         unique_ids=["FOODS_1_001"],
-        engine="matplotlib",
-        ax=plot_ax,
+        engine="plotly",
     )
 
     # Plot the transformed data on the same axes
@@ -110,32 +105,30 @@ def _(client, log_transformed_data, sales_data):
         log_transformed_data,
         max_insample_length=30,
         unique_ids=["FOODS_1_001"],
-        engine="matplotlib",
-        ax=plot_ax,
+        engine="plotly",
+        ax=ax,
     )
 
-    # Retrieve all line objects from the axes
-    plot_lines = plot_ax.get_lines()
+    # Update theme
+    ax.update_layout(template="plotly_dark")
 
-    # Assign colors to each line
-    line_colors = ["blue", "red"]
-    for line, color in zip(plot_lines, line_colors, strict=False):
-        line.set_color(color)
+    # Customize names and colors
+    ax.data[0].name = "Original Sales"
+    ax.data[0].line.color = "#98FE09"
+    ax.data[1].name = "Transformed Sales"
+    ax.data[1].line.color = "#02FEFA"
 
-    # Set the y-axis limit
-    plot_ax.set_ylim(top=6)
-
-    # Add a legend to distinguish the plots
-    plot_ax.legend(["Original Data", "Transformed Data"])
-
-    # Display the plot
-    plot_fig
+    # Show the plot
+    ax.show()
     return
 
 
 @app.cell
 def _(log_transformed_data):
+    # Select the last 28 observations for each unique_id — used as test data
     test_data = log_transformed_data.groupby("unique_id").tail(28)
+
+    # Drop the test set indices from the original dataset to form the training set
     train_data = log_transformed_data.drop(test_data.index).reset_index(drop=True)
     return test_data, train_data
 
@@ -148,7 +141,7 @@ def _(mo):
 
 @app.cell
 def _(client, train_data):
-    raw_forecast = client.forecast(
+    log_forecast = client.forecast(
         df=train_data,
         h=28,
         level=[80],
@@ -157,7 +150,7 @@ def _(client, train_data):
         target_col="y",
         id_col="unique_id",
     )
-    return (raw_forecast,)
+    return (log_forecast,)
 
 
 @app.cell(hide_code=True)
@@ -173,16 +166,16 @@ def _(mo):
 
 
 @app.cell
-def _(np, raw_forecast):
+def _(log_forecast, np):
     def reverse_log_transform(df):
-        value_cols = [col for col in df if col not in ["ds", "unique_id"]]
         df = df.copy()
+        value_cols = [col for col in df if col not in ["ds", "unique_id"]]
         df[value_cols] = np.exp(df[value_cols]) - 1
         return df
 
-    untransformed_forecast = reverse_log_transform(raw_forecast)
-    untransformed_forecast.head()
-    return reverse_log_transform, untransformed_forecast
+    base_forecast = reverse_log_transform(log_forecast)
+    base_forecast.head()
+    return base_forecast, reverse_log_transform
 
 
 @app.cell(hide_code=True)
@@ -192,43 +185,31 @@ def _(mo):
 
 
 @app.cell
-def _(client, test_data, untransformed_forecast):
-    client.plot(
-        test_data,
-        untransformed_forecast,
-        models=["TimeGPT"],
-        level=[80],
-        time_col="ds",
-        target_col="y",
-    )
-    return
+def _(evaluate, mae, pd):
+    def merge_forecast(real_data, forecast):
+        merged_results = pd.merge(
+            real_data, forecast, "left", ["unique_id", "ds"]
+        )
+        return merged_results
 
-
-app._unparsable_cell(
-    r"""
-    mae(df=)
-    """,
-    name="_",
-)
+    def get_mean_mae(real_data, forecast):
+        merged_results = merge_forecast(real_data, forecast)
+        model_evaluation = evaluate(
+            merged_results,
+            metrics=[mae],
+            models=["TimeGPT"],
+            target_col="y",
+            id_col="unique_id",
+        )
+        return model_evaluation.groupby("metric")["TimeGPT"].mean()["mae"]
+    return (get_mean_mae,)
 
 
 @app.cell
-def _(evaluate, mae, pd, test_data, untransformed_forecast):
-    untransformed_forecast["ds"] = pd.to_datetime(untransformed_forecast["ds"])
-    merged_results = pd.merge(
-        test_data, untransformed_forecast, "left", ["unique_id", "ds"]
-    )
-
-    model_evaluation = evaluate(
-        merged_results,
-        metrics=[mae],
-        models=["TimeGPT"],
-        target_col="y",
-        id_col="unique_id",
-    )
-    model_metrics = model_evaluation.groupby("metric")["TimeGPT"].mean()
-    model_metrics
-    return (merged_results,)
+def _(base_forecast, get_mean_mae, test_data):
+    base_mae = get_mean_mae(test_data, base_forecast)
+    print(base_mae)
+    return (base_mae,)
 
 
 @app.cell(hide_code=True)
@@ -239,7 +220,7 @@ def _(mo):
 
 @app.cell
 def _(client, train_data):
-    raw_finetuned = client.forecast(
+    log_finetuned_forecast = client.forecast(
         df=train_data,
         h=28,
         level=[80],
@@ -250,33 +231,78 @@ def _(client, train_data):
         target_col="y",
         id_col="unique_id",
     )
-    return (raw_finetuned,)
+    return (log_finetuned_forecast,)
 
 
 @app.cell
-def _(raw_finetuned, reverse_log_transform):
-    renamed_finetuned = raw_finetuned.rename(columns={"TimeGPT": "TimeGPT_finetuned"})
-    untransformed_finetuned = reverse_log_transform(renamed_finetuned)
-    untransformed_finetuned.head()
-    return (untransformed_finetuned,)
+def _(get_mean_mae, log_finetuned_forecast, reverse_log_transform, test_data):
+    finetuned_forecast = reverse_log_transform(log_finetuned_forecast)
+    finedtune_mae = get_mean_mae(test_data, finetuned_forecast)
+    print(finedtune_mae)
+    return (finedtune_mae,)
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""## Incorporating Exogenous Variables""")
+    return
 
 
 @app.cell
-def _(evaluate, mae, merged_results, untransformed_finetuned):
-    merged_results["TimeGPT_finetuned"] = untransformed_finetuned[
-        "TimeGPT_finetuned"
-    ].values
-    final_evaluation = evaluate(
-        merged_results,
-        metrics=[mae],
-        models=["TimeGPT", "TimeGPT_finetuned"],
+def _(test_data):
+    non_exogenous_variables = ["y", "sell_price"]
+    futr_exog_data = test_data.drop(non_exogenous_variables, axis=1)
+    futr_exog_data.head()
+    return (futr_exog_data,)
+
+
+@app.cell
+def _(client, futr_exog_data, train_data):
+    log_exogenous_forecast = client.forecast(
+        df=train_data,
+        X_df=futr_exog_data,
+        h=28,
+        level=[80],
+        finetune_steps=10,
+        finetune_loss="mae",
+        model="timegpt-1-long-horizon",
+        time_col="ds",
         target_col="y",
         id_col="unique_id",
     )
-    final_metrics = final_evaluation.groupby("metric")[
-        ["TimeGPT", "TimeGPT_finetuned"]
-    ].mean()
-    final_metrics
+    return (log_exogenous_forecast,)
+
+
+@app.cell
+def _(get_mean_mae, log_exogenous_forecast, reverse_log_transform, test_data):
+    exogenous_forecast = reverse_log_transform(log_exogenous_forecast)
+    exogenous_mae = get_mean_mae(test_data, exogenous_forecast)
+    print(exogenous_mae)
+    return (exogenous_mae,)
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""## Comparing MAE""")
+    return
+
+
+@app.cell
+def _(base_mae, exogenous_mae, finedtune_mae, pd):
+    # Define the mean absolute error (MAE) values for different TimeGPT variants
+    mae_values = {
+        "Model Variant": ["Base TimeGPT", "Fine-Tuned TimeGPT", "TimeGPT with Exogenous"],
+        "MAE": [base_mae, finedtune_mae, exogenous_mae]
+    }
+
+    mae_table = pd.DataFrame(mae_values)
+    mae_table
+
+    return
+
+
+@app.cell
+def _():
     return
 
 
