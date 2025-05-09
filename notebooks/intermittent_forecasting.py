@@ -14,7 +14,7 @@
 
 import marimo
 
-__generated_with = "0.13.1"
+__generated_with = "0.13.6"
 app = marimo.App(app_title="Demand Forecasting")
 
 
@@ -32,7 +32,6 @@ def _():
     from nixtla import NixtlaClient
     from utilsforecast.evaluation import evaluate
     from utilsforecast.losses import mae
-
     return NixtlaClient, evaluate, mae, np, pd
 
 
@@ -157,10 +156,10 @@ def _(client, train_data):
 def _(mo):
     mo.md(
         r"""
-        ## Reverse Transformation
+    ## Reverse Transformation
 
-        After obtaining predictions, we reverse the log transformation to return to the original scale.
-        """
+    After obtaining predictions, we reverse the log transformation to return to the original scale.
+    """
     )
     return
 

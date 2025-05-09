@@ -3,6 +3,7 @@
 # dependencies = [
 #     "marimo",
 #     "matplotlib==3.10.1",
+#     "nixtla==0.6.6",
 #     "pandas==2.2.3",
 #     "python-dotenv==1.1.0",
 # ]
