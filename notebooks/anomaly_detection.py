@@ -27,6 +27,12 @@ def _(mo):
     return
 
 
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""Import required libraries for data manipulation and Nixtla client initialization.""")
+    return
+
+
 @app.cell
 def _():
     import os
@@ -34,6 +40,12 @@ def _():
     import pandas as pd
     from nixtla import NixtlaClient
     return NixtlaClient, os, pd
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""Initialize Nixtla client with API key from environment variables.""")
+    return
 
 
 @app.cell
@@ -55,12 +67,24 @@ def _(mo):
     return
 
 
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""Load the Peyton Manning Wikipedia page views dataset and display first 10 rows.""")
+    return
+
+
 @app.cell
 def _(pd):
     # Read the dataset
     wikipedia = pd.read_csv("https://datasets-nixtla.s3.amazonaws.com/peyton-manning.csv", parse_dates=["ds"])
     wikipedia.head(10)
     return (wikipedia,)
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""Plot the time series data to visualize the patterns.""")
+    return
 
 
 @app.cell
@@ -75,6 +99,12 @@ def _(mo):
     return
 
 
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""Detect anomalies in the time series using TimeGPT model with default settings.""")
+    return
+
+
 @app.cell
 def _(nixtla_client, wikipedia):
     anomalies_df = nixtla_client.detect_anomalies(
@@ -86,6 +116,12 @@ def _(nixtla_client, wikipedia):
     return (anomalies_df,)
 
 
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""Visualize the detected anomalies on the time series plot.""")
+    return
+
+
 @app.cell
 def _(anomalies_df, nixtla_client, wikipedia):
     nixtla_client.plot(wikipedia, anomalies_df)
@@ -95,6 +131,12 @@ def _(anomalies_df, nixtla_client, wikipedia):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""## Anomaly detection with exogenous features""")
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""Detect anomalies using TimeGPT with additional date-based features (month and year).""")
     return
 
 
@@ -110,12 +152,24 @@ def _(nixtla_client, wikipedia):
     return (anomalies_df_exogenous,)
 
 
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""Plot the feature importance weights to understand which features contribute most to anomaly detection.""")
+    return
+
+
 @app.cell
 def _(nixtla_client):
     nixtla_client.weights_x.plot.barh(
         x="features",
         y="weights"
     )
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""Compare the number of anomalies detected with and without exogenous features.""")
     return
 
 
@@ -126,6 +180,12 @@ def _(anomalies_df, anomalies_df_exogenous):
 
     # With exogenous features
     print("Number of anomalies with exogenous features:", anomalies_df_exogenous.anomaly.sum())
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""Visualize the anomalies detected using the model with exogenous features.""")
     return
 
 
@@ -141,10 +201,22 @@ def _(mo):
     return
 
 
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""Detect anomalies using a lower confidence interval (70%) to see how it affects the results.""")
+    return
+
+
 @app.cell
 def _(nixtla_client, wikipedia):
     anomalies_df_70 = nixtla_client.detect_anomalies(wikipedia, freq="D", level=70)
     return (anomalies_df_70,)
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""Compare the number of anomalies detected with different confidence intervals (99% vs 70%).""")
+    return
 
 
 @app.cell
@@ -152,6 +224,12 @@ def _(anomalies_df, anomalies_df_70):
     # Print and compare anomaly counts
     print("Number of anomalies with 99% confidence interval:", anomalies_df.anomaly.sum())
     print("Number of anomalies with 70% confidence interval:", anomalies_df_70.anomaly.sum())
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""Visualize the anomalies detected using the 70% confidence interval.""")
     return
 
 

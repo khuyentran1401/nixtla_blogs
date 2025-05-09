@@ -25,6 +25,12 @@ def _():
     return (mo,)
 
 
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""Import required libraries for data analysis, forecasting, and evaluation metrics.""")
+    return
+
+
 @app.cell
 def _():
     import numpy as np
@@ -38,6 +44,12 @@ def _():
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""## Prerequisites""")
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""Initialize Nixtla client with API key from environment variables.""")
     return
 
 
@@ -56,6 +68,12 @@ def _(mo):
     return
 
 
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""Load and preprocess the M5 sales dataset with exogenous variables.""")
+    return
+
+
 @app.cell
 def _(pd):
     sales_data = pd.read_csv(
@@ -64,6 +82,12 @@ def _(pd):
     sales_data["ds"] = pd.to_datetime(sales_data["ds"])
     sales_data.head()
     return (sales_data,)
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""Visualize the sales data for the first 365 days.""")
+    return
 
 
 @app.cell
@@ -81,12 +105,24 @@ def _(mo):
     return
 
 
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""Apply log transformation to handle the intermittent nature of the data.""")
+    return
+
+
 @app.cell
 def _(np, sales_data):
     log_transformed_data = sales_data.copy()
     log_transformed_data["y"] = np.log(log_transformed_data["y"] + 1)
     log_transformed_data.head()
     return (log_transformed_data,)
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""Compare original and log-transformed data for a specific product.""")
+    return
 
 
 @app.cell
@@ -122,6 +158,12 @@ def _(client, log_transformed_data, sales_data):
     return
 
 
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""Split data into training and test sets (last 28 days for testing).""")
+    return
+
+
 @app.cell
 def _(log_transformed_data):
     # Select the last 28 observations for each unique_id — used as test data
@@ -135,6 +177,12 @@ def _(log_transformed_data):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""## Generating Forecasts with TimeGPT""")
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""Generate forecasts using the base TimeGPT model with 80% confidence interval.""")
     return
 
 
@@ -183,6 +231,12 @@ def _(mo):
     return
 
 
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""Define functions to merge forecasts with real data and calculate MAE.""")
+    return
+
+
 @app.cell
 def _(evaluate, mae, pd):
     def merge_forecast(real_data, forecast):
@@ -204,6 +258,12 @@ def _(evaluate, mae, pd):
     return (get_mean_mae,)
 
 
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""Calculate MAE for the base model forecasts.""")
+    return
+
+
 @app.cell
 def _(base_forecast, get_mean_mae, test_data):
     base_mae = get_mean_mae(test_data, base_forecast)
@@ -214,6 +274,12 @@ def _(base_forecast, get_mean_mae, test_data):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""## Finetuning the Model""")
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""Generate forecasts using a fine-tuned TimeGPT model with 10 finetuning steps.""")
     return
 
 
@@ -233,6 +299,12 @@ def _(client, train_data):
     return (log_finetuned_forecast,)
 
 
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""Calculate MAE for the fine-tuned model forecasts.""")
+    return
+
+
 @app.cell
 def _(get_mean_mae, log_finetuned_forecast, reverse_log_transform, test_data):
     finetuned_forecast = reverse_log_transform(log_finetuned_forecast)
@@ -247,12 +319,24 @@ def _(mo):
     return
 
 
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""Prepare exogenous variables for forecasting by removing target and price columns.""")
+    return
+
+
 @app.cell
 def _(test_data):
     non_exogenous_variables = ["y", "sell_price"]
     futr_exog_data = test_data.drop(non_exogenous_variables, axis=1)
     futr_exog_data.head()
     return (futr_exog_data,)
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""Generate forecasts using TimeGPT with exogenous variables and fine-tuning.""")
+    return
 
 
 @app.cell
@@ -272,6 +356,12 @@ def _(client, futr_exog_data, train_data):
     return (log_exogenous_forecast,)
 
 
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""Calculate MAE for the model with exogenous variables.""")
+    return
+
+
 @app.cell
 def _(get_mean_mae, log_exogenous_forecast, reverse_log_transform, test_data):
     exogenous_forecast = reverse_log_transform(log_exogenous_forecast)
@@ -283,6 +373,12 @@ def _(get_mean_mae, log_exogenous_forecast, reverse_log_transform, test_data):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""## Comparing MAE""")
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""Create a comparison table of MAE values for all three model variants.""")
     return
 
 
