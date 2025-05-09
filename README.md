@@ -33,6 +33,11 @@ uv sync
 
 Each blog post's code is organized in its own notebook, named according to the blog post title.
 
+## Available Notebooks
+
+- [Anomaly Detection](https://khuyentran1401.github.io/nixtla_blogs/anomaly_detection.html) - Learn how to detect anomalies in time series data using TimeGPT
+- [Intermittent Forecasting](https://khuyentran1401.github.io/nixtla_blogs/intermittent_forecasting.html) - Explore demand forecasting techniques for intermittent time series
+
 ## Running Notebooks Locally
 
 To run the notebooks locally, you can use marimo's sandbox mode:
