@@ -10,6 +10,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      NIXTLA_API_KEY: ${{ secrets.NIXTLA_API_KEY }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
