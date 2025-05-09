@@ -1,0 +1,55 @@
+name: Publish Marimo Notebooks
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'notebooks/*.py'
+      - '.github/workflows/publish-marimo.yml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Install dependencies
+        run: uv add marimo
+
+      - name: Export notebooks
+        run: |
+          mkdir -p build
+          for notebook in notebooks/*.py; do
+            output_path="build/$(basename "$notebook" .py).html"
+            uv run marimo export html "$notebook" -o "$output_path" --sandbox
+          done
+
+      - name: Upload Pages Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: build
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+        with:
+          artifact_name: github-pages
