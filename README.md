@@ -63,7 +63,7 @@ uv sync --all-extras
 ```
 4. Edit notebooks using marimo:
 ```bash
-marimo edit notebook.py --sandbox
+uv run marimo edit notebooks/notebook.py --sandbox
 ```
 5. Make your changes and ensure they work as expected
 6. Commit your changes with a descriptive message
