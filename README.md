@@ -41,6 +41,8 @@ Each blog post's code is organized in its own notebook, named according to the b
 
 ## Running Notebooks Locally
 
+[Marimo](https://marimo.io) is a Python notebook environment that combines the interactivity of Jupyter with the power of modern Python. It provides a clean, distraction-free interface for data analysis and visualization.
+
 To run the notebooks locally, you can use marimo's sandbox mode:
 
 ```bash
