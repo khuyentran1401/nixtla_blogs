@@ -24,6 +24,7 @@ source .venv/bin/activate  # On Unix/macOS
 
 ```bash
 uv sync
+pre-commit install
 ```
 
 ## Project Structure
@@ -60,6 +61,7 @@ git checkout -b your-feature-name
 3. Set up your development environment:
 ```bash
 uv sync --all-extras
+pre-commit install
 ```
 4. Edit notebooks using marimo:
 ```bash
