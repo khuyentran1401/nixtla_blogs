@@ -8,7 +8,7 @@
 
 ## Writing Checklist
 
-### Writing Style
+### Writing Style Checklist
 
 - [ ] Use direct, conversational language
 - [ ] Keep paragraphs short (2–4 sentences maximum)
