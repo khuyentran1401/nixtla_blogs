@@ -6,26 +6,26 @@
 - [Write Article Draft](#write-article-draft)
 - [Write Code](#write-code)
 
-## Style Guidelines
+## Writing Checklist
 
 ### Writing Style
 
-* Use direct, conversational language
-* Keep paragraphs short (2–4 sentences maximum)
-* Opt for fewer words with the same meaning instead of more words
+- [ ] Use direct, conversational language
+- [ ] Keep paragraphs short (2–4 sentences maximum)
+- [ ] Maintain a balanced ratio of explanation to example or code (approximately 50/50)
 
-### Audience Assumptions
+### Audience Assumptions Checklist
 
-* Assume readers are data scientists familiar with basic time series concepts but not with Nixtla tools
-* Write for readers who scan, not follow step-by-step; they want to *understand*, not necessarily *run* the code
+- [ ] Write for data scientists who are familiar with basic time series concepts
+- [ ] Explain Nixtla tools as if readers are new to them
+- [ ] Include enough examples for quick understanding of concepts
 
-### Structure & Content
+### Content Checklist
 
-* Begin with a real-world time series problem or use case
-* Present a solution that addresses the problem, making it the central focus of your article
-* Maintain a balanced ratio of explanation to example or code (approximately 50/50)
-* Include clear explanations of time series concepts and terminology
-* When mentioning install commands or configuration flags, keep them minimal and link out to official docs for details
+- [ ] Begin with a real-world time series problem or use case
+- [ ] Present a solution that addresses the problem, making it the central focus of your article
+- [ ] Include clear explanations of time series concepts and terminology
+- [ ] When mentioning install commands or configuration flags, keep them minimal and link out to official docs for details
 
 ## Write Article Draft
 
