@@ -12,7 +12,7 @@
 
 - [ ] Use direct, conversational language
 - [ ] Keep paragraphs short (2–4 sentences maximum)
-- [ ] Maintain a balanced ratio of explanation to example or code (approximately 50/50)
+- [ ] For every major code block, provide a clear explanation of what it does and why it matters.
 - [ ] Structure content for quick scanning with clear headings and bullet points
 
 ### Audience Assumptions Checklist
