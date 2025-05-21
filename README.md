@@ -53,23 +53,7 @@ This will start a local server where you can interact with the notebook in your 
 
 ## Contributing
 
-We welcome contributions to improve the code examples and documentation. Here's how to contribute:
+We welcome contributions to improve the code examples and documentation. Please see [CONTRIBUTION.md](CONTRIBUTION.md) for detailed guidelines on:
 
-1. Fork the repository
-2. Create a new branch for your changes:
-```bash
-git checkout -b your-feature-name
-```
-3. Set up your development environment:
-```bash
-uv sync --all-extras
-pre-commit install
-```
-4. Edit notebooks using marimo:
-```bash
-uv run marimo edit notebooks/notebook.py --sandbox
-```
-5. Make your changes and ensure they work as expected
-6. Commit your changes with a descriptive message
-7. Push your branch to your fork
-8. Open a pull request to the main repository
+- Style and structure of blog posts
+- Development workflow
