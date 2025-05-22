@@ -1,6 +1,18 @@
+# /// script
+# requires-python = ">=3.11"
+# dependencies = [
+#     "marimo",
+#     "matplotlib==3.10.3",
+#     "numpy==2.2.6",
+#     "pandas==2.2.3",
+#     "statsforecast==2.0.1",
+#     "utilsforecast==0.2.12",
+# ]
+# ///
+
 import marimo
 
-__generated_with = "0.13.9"
+__generated_with = "0.13.6"
 app = marimo.App(width="medium")
 
 
@@ -10,13 +22,13 @@ def _():
     return (mo,)
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""# Effortless Accuracy: Unlocking the Power of Baseline Forecasts""")
     return
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""### Required Packages""")
     return
@@ -24,15 +36,20 @@ def _(mo):
 
 @app.cell
 def _():
-    import pandas as pd
-    import numpy as np
     import os
+
+    import pandas as pd
     from statsforecast import StatsForecast
-    from statsforecast.models import Naive, SeasonalNaive, HistoricAverage, WindowAverage
+    from statsforecast.models import (
+        HistoricAverage,
+        Naive,
+        SeasonalNaive,
+        WindowAverage,
+    )
     from utilsforecast.evaluation import evaluate
     from utilsforecast.losses import rmse
 
-    os.environ['NIXTLA_ID_AS_COL'] = '1'
+    os.environ["NIXTLA_ID_AS_COL"] = "1"
     return (
         HistoricAverage,
         Naive,
@@ -45,12 +62,12 @@ def _():
     )
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _(mo):
     mo.md(
         r"""
     ### Getting the data
-    Tourism data (from the R-tsibble package), but with only 3 regions included. 
+    Tourism data (from the R-tsibble package), but with only 3 regions included.
     """
     )
     return
@@ -58,15 +75,15 @@ def _(mo):
 
 @app.cell
 def _(pd):
-    df = pd.read_csv('EffortlessAccuracyUnlockingThePowerOfBaselineForecasts_3Region_tourism.csv')
-    df['ds'] = pd.PeriodIndex(df['ds'], freq='Q').to_timestamp()
+    df = pd.read_csv("data/tourism.csv")
+    df["ds"] = pd.PeriodIndex(df["ds"], freq="Q").to_timestamp()
     df
     return (df,)
 
 
-@app.cell
-def _():
-    ### Splitting data into test and train
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""### Splitting data into test and train""")
     return
 
 
@@ -77,9 +94,9 @@ def _(df):
     return test_df, train_df
 
 
-@app.cell
-def _():
-    ### Setting up the baseline models and training them on the train data.
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""### Setting up the baseline models and training them on the train data.""")
     return
 
 
@@ -104,16 +121,16 @@ def _(
 
     sf = StatsForecast(
         models=models,
-        freq='QS',
+        freq="QS",
     )
 
     sf.fit(train_df)
     return h, sf
 
 
-@app.cell
-def _():
-    ### Predicting for each of the model
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""### Predicting for each of the model""")
     return
 
 
@@ -129,7 +146,7 @@ def _(df, pred_df, sf):
     return
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _():
     ### Evaluate the models
     return
@@ -137,18 +154,8 @@ def _():
 
 @app.cell
 def _(evaluate, pd, pred_df, rmse, test_df):
-    accuracy_df =  pd.merge(test_df, pred_df, how = 'left', on = ['unique_id', 'ds'])
+    accuracy_df =  pd.merge(test_df, pred_df, how = "left", on = ["unique_id", "ds"])
     evaluate(accuracy_df, metrics=[rmse])
-    return
-
-
-@app.cell
-def _():
-    return
-
-
-@app.cell
-def _():
     return
 
 
