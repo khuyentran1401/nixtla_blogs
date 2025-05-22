@@ -10,7 +10,7 @@
 
 ### Writing Style Checklist
 
-- [ ] Use direct, conversational language
+- [ ] Use action verbs instead of passive voice
 - [ ] Keep paragraphs short (2–4 sentences maximum)
 - [ ] For every major code block, provide a clear explanation of what it does and why it matters.
 - [ ] Structure content for quick scanning with clear headings and bullet points
