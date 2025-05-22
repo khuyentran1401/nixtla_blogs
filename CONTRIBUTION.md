@@ -75,6 +75,13 @@ Create a new notebook in the `notebooks` directory using marimo:
 uv run marimo edit notebooks/your_notebook_name.py --sandbox
 ```
 
+#### Notebook Creation Guidelines
+
+- [ ] Use snake_case for notebook names (e.g., `anomaly_detection.py`, `intermittent_forecasting.py`)
+- [ ] Keep notebook names short but descriptive
+- [ ] Create headings as markdown blocks (Command/Control + Shift + M)
+- [ ] Hide markdown code of headings (Command/Control + H)
+
 #### Publishing Notebooks
 
 To export your marimo notebooks to HTML locally:
@@ -108,4 +115,3 @@ The exported HTML files will be automatically deployed to GitHub Pages through t
 2. Create a new branch for your feature
 3. Make your changes
 4. Submit a pull request with a clear description of changes
-

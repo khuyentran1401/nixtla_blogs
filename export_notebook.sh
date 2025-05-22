@@ -7,7 +7,7 @@ if [ -z "$1" ]; then
     exit 1
 fi
 
-# Get the notebook name without .py extension if provided
+# Remove .py extension if present
 notebook_name=${1%.py}
 
 # Get the directory path
@@ -20,6 +20,9 @@ mkdir -p "public/$dir_path"
 # Export the notebook to HTML
 echo "Exporting $notebook_name.py to HTML..."
 uv run marimo export html "$notebook_name.py" -o "public/$notebook_name.html" --sandbox
+
+# Generate the index page
+uv run scripts/generate_index.py
 
 # Check if the export was successful
 if [ $? -eq 0 ]; then
