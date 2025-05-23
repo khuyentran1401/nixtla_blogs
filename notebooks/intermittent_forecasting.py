@@ -15,7 +15,7 @@
 import marimo
 
 __generated_with = "0.13.6"
-app = marimo.App(app_title="Demand Forecasting")
+app = marimo.App(app_title="Intermittent Forecasting")
 
 
 @app.cell
