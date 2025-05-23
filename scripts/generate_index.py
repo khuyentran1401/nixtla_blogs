@@ -38,11 +38,12 @@ def generate_index():
             max-width: 800px;
             margin: 0 auto;
             padding: 2rem;
-            color: #333;
+            color: white;
+            background-color: #0C0C0C;
         }}
         h1 {{
-            color: #2c3e50;
-            border-bottom: 2px solid #eee;
+            color: white;
+            border-bottom: 2px solid white;
             padding-bottom: 0.5rem;
         }}
         .notebook-list {{
@@ -52,34 +53,36 @@ def generate_index():
         .notebook-item {{
             margin-bottom: 2rem;
             padding: 1rem;
-            border: 1px solid #eee;
+            border: 1px solid white;
             border-radius: 8px;
             transition: transform 0.2s;
         }}
         .notebook-item:hover {{
             transform: translateY(-2px);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1);
         }}
         .notebook-title {{
             font-size: 1.5rem;
             margin: 0 0 0.5rem 0;
-            color: #2c3e50;
+            color: white;
         }}
         .notebook-description {{
-            color: #666;
+            color: #CCCCCC;
             margin-bottom: 1rem;
         }}
         .notebook-link {{
             display: inline-block;
             padding: 0.5rem 1rem;
-            background-color: #3498db;
+            background-color: #0E00F8;
             color: white;
             text-decoration: none;
             border-radius: 4px;
             transition: background-color 0.2s;
+            border: 1px solid white;
         }}
         .notebook-link:hover {{
-            background-color: #2980b9;
+            background-color: #0D00E0;
+            border: 1px solid white;
         }}
     </style>
 </head>

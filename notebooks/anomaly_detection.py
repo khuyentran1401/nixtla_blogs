@@ -12,7 +12,7 @@
 import marimo
 
 __generated_with = "0.13.6"
-app = marimo.App(width="medium", title="Anomaly detection")
+app = marimo.App(width="medium", app_title="Anomaly Detection")
 
 
 @app.cell(hide_code=True)

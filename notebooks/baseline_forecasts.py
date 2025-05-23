@@ -13,7 +13,7 @@
 import marimo
 
 __generated_with = "0.13.6"
-app = marimo.App(width="medium", title="Baseline Forecasts")
+app = marimo.App(width="medium", app_title="Baseline Forecasts")
 
 
 @app.cell
