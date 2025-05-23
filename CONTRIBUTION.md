@@ -40,6 +40,7 @@
 ### Action Verbs vs Passive Voice
 
 ❌ *The model was trained on the dataset.*
+
 ✅ *Train the model on the dataset.*
 
 ### Code Explanation
@@ -65,26 +66,31 @@ This list includes four common baseline models:
 ### Filler Words
 
 ❌ *You just need to install the library to get started.*
+
 ✅ *Install the library to get started.*
 
 ### Subject Clarity
 
 ❌ *There are several reasons to use Nixtla tools.*
+
 ✅ *Nixtla tools offer several advantages.*
 
 ### Pronoun Clarity
 
 ❌ *This improves accuracy.*
+
 ✅ *The seasonal adjustment improves accuracy.*
 
 ### Verb Forms
 
 ❌ *Using this model helps reduce error.*
+
 ✅ *This model helps reduce error.*
 
 ### Cultural References
 
 ❌ *There's no silver bullet for intermittent demand.*
+
 ✅ *No single model solves all intermittent demand problems.*
 
 ## Write Article Draft
