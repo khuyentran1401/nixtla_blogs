@@ -13,10 +13,12 @@
 
 
 - [ ] **Use action verbs instead of passive voice**
+
   ❌ *The model was trained on the dataset.*
   ✅ *Train the model on the dataset.*
 
 - [ ] **Explain what the code does before presenting it**
+
   Define the baseline models to use for forecasting:
 
   ```python
@@ -29,6 +31,7 @@
   ```
 
 - [ ] **Provide a clear explanation of the code immediately after presenting it**
+
   This list includes four common baseline models:
 
   * `HistoricAverage()`: Mean Forecast
@@ -37,22 +40,27 @@
   * `WindowAverage(window_size=4)`: Averages the last 4 quarters to forecast future values
 
 - [ ] **Avoid filler words (just, really, actually, basically, in order to)**
+
   ❌ *You just need to install the library to get started.*
   ✅ *Install the library to get started.*
 
 - [ ] **Avoid phrases that hide the subject (there is, there are)**
+
   ❌ *There are several reasons to use Nixtla tools.*
   ✅ *Nixtla tools offer several advantages.*
 
 - [ ] **Avoid ambiguous pronouns (it, this, that)**
+
   ❌ *This improves accuracy.*
   ✅ *The seasonal adjustment improves accuracy.*
 
 - [ ] **Avoid -ing verb forms when possible (using, having, going)**
+
   ❌ *Using this model helps reduce error.*
   ✅ *This model helps reduce error.*
 
 - [ ] **Avoid culture-specific references or idioms**
+
   ❌ *There's no silver bullet for intermittent demand.*
   ✅ *No single model solves all intermittent demand problems.*
 
