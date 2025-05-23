@@ -14,6 +14,12 @@
 - [ ] Keep paragraphs short (2–4 sentences maximum)
 - [ ] For every major code block, provide a clear explanation of what it does and why it matters.
 - [ ] Structure content for quick scanning with clear headings and bullet points
+- [ ] Avoid filler words (just, really, actually, basically, in order to)  
+- [ ] Avoid phrases that hide the subject (there is, there are)  
+- [ ] Avoid ambiguous pronouns (it, this, that)  
+- [ ] Avoid -ing verb forms when possible (using, having, going)  
+- [ ] Avoid culture-specific references or idioms (kill two birds with one stone, silver bullet)
+
 
 ### Audience Assumptions Checklist
 
