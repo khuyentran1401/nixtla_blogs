@@ -12,15 +12,15 @@
 ### Writing Style Checklist
 
 - [ ] Use action verbs instead of passive voice
-- [ ] Explain what the code does before presenting it
-- [ ] Provide a clear explanation of the code immediately after presenting it
+- [ ] Structure content for quick scanning with clear headings and bullet points
+- [ ] Keep paragraphs short (2–4 sentences maximum)
+- [ ] Frame the code with context: explain what it does before presenting it, and clarify key parts immediately after
 - [ ] Avoid filler words (just, really, actually, basically, in order to)
 - [ ] Avoid phrases that hide the subject (there is, there are)
 - [ ] Avoid ambiguous pronouns (it, this, that)
 - [ ] Avoid -ing verb forms when possible (using, having, going)
-- [ ] Avoid culture-specific references or idioms
-- [ ] Structure content for quick scanning with clear headings and bullet points
-- [ ] Keep paragraphs short (2–4 sentences maximum)
+- [ ] Avoid culture-specific references or idioms (kill two birds with one stone, silver bullet)
+
 
 ### Audience Assumptions Checklist
 
