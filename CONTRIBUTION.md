@@ -11,53 +11,16 @@
 
 ### Writing Style Checklist
 
-
-- [ ] **Use action verbs instead of passive voice**
-  ❌ *The model was trained on the dataset.*
-  ✅ *Train the model on the dataset.*
-
-- [ ] **Explain what the code does before presenting it**
-  Define the baseline models to use for forecasting:
-
-  ```python
-  models = [
-      HistoricAverage(),
-      Naive(),
-      SeasonalNaive(season_length = 4),
-      WindowAverage(window_size=4)
-  ]
-  ```
-
-- [ ] **Provide a clear explanation of the code immediately after presenting it**
-  This list includes four common baseline models:
-
-  * `HistoricAverage()`: Mean Forecast
-  * `Naive()`: Naive Forecast
-  * `SeasonalNaive(season_length=4)`: Seasonal Naive Forecast for quarterly seasonality
-  * `WindowAverage(window_size=4)`: Averages the last 4 quarters to forecast future values
-
-- [ ] **Avoid filler words (just, really, actually, basically, in order to)**
-  ❌ *You just need to install the library to get started.*
-  ✅ *Install the library to get started.*
-
-- [ ] **Avoid phrases that hide the subject (there is, there are)**
-  ❌ *There are several reasons to use Nixtla tools.*
-  ✅ *Nixtla tools offer several advantages.*
-
-- [ ] **Avoid ambiguous pronouns (it, this, that)**
-  ❌ *This improves accuracy.*
-  ✅ *The seasonal adjustment improves accuracy.*
-
-- [ ] **Avoid -ing verb forms when possible (using, having, going)**
-  ❌ *Using this model helps reduce error.*
-  ✅ *This model helps reduce error.*
-
-- [ ] **Avoid culture-specific references or idioms**
-  ❌ *There's no silver bullet for intermittent demand.*
-  ✅ *No single model solves all intermittent demand problems.*
-
-- [ ] **Structure content for quick scanning with clear headings and bullet points**
-- [ ] **Keep paragraphs short (2–4 sentences maximum)**
+- [ ] Use action verbs instead of passive voice
+- [ ] Explain what the code does before presenting it
+- [ ] Provide a clear explanation of the code immediately after presenting it
+- [ ] Avoid filler words (just, really, actually, basically, in order to)
+- [ ] Avoid phrases that hide the subject (there is, there are)
+- [ ] Avoid ambiguous pronouns (it, this, that)
+- [ ] Avoid -ing verb forms when possible (using, having, going)
+- [ ] Avoid culture-specific references or idioms
+- [ ] Structure content for quick scanning with clear headings and bullet points
+- [ ] Keep paragraphs short (2–4 sentences maximum)
 
 ### Audience Assumptions Checklist
 
@@ -71,6 +34,58 @@
 - [ ] Present a solution that addresses the problem, making it the central focus of your article
 - [ ] Include clear explanations of time series concepts and terminology
 - [ ] When mentioning install commands or configuration flags, keep them minimal and link out to official docs for details
+
+## Writing Style Examples
+
+### Action Verbs vs Passive Voice
+
+❌ *The model was trained on the dataset.*
+✅ *Train the model on the dataset.*
+
+### Code Explanation
+
+Start by defining the baseline models for comparison:
+
+```python
+models = [
+    HistoricAverage(),
+    Naive(),
+    SeasonalNaive(season_length = 4),
+    WindowAverage(window_size=4)
+]
+```
+
+This list includes four common baseline models:
+
+- `HistoricAverage()`: Mean Forecast
+- `Naive()`: Naive Forecast
+- `SeasonalNaive(season_length=4)`: Seasonal Naive Forecast for quarterly seasonality
+- `WindowAverage(window_size=4)`: Averages the last 4 quarters to forecast future values
+
+### Filler Words
+
+❌ *You just need to install the library to get started.*
+✅ *Install the library to get started.*
+
+### Subject Clarity
+
+❌ *There are several reasons to use Nixtla tools.*
+✅ *Nixtla tools offer several advantages.*
+
+### Pronoun Clarity
+
+❌ *This improves accuracy.*
+✅ *The seasonal adjustment improves accuracy.*
+
+### Verb Forms
+
+❌ *Using this model helps reduce error.*
+✅ *This model helps reduce error.*
+
+### Cultural References
+
+❌ *There's no silver bullet for intermittent demand.*
+✅ *No single model solves all intermittent demand problems.*
 
 ## Write Article Draft
 
