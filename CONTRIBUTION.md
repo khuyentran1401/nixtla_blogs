@@ -2,24 +2,62 @@
 
 ## Table of Contents
 
-- [Style Guidelines](#style-guidelines)
+- [Writing Checklist](#writing-checklist)
 - [Write Article Draft](#write-article-draft)
 - [Write Code](#write-code)
+- [Pull Request Process](#pull-request-process)
 
 ## Writing Checklist
 
 ### Writing Style Checklist
 
-- [ ] Use action verbs instead of passive voice
-- [ ] Keep paragraphs short (2–4 sentences maximum)
-- [ ] For every major code block, provide a clear explanation of what it does and why it matters.
-- [ ] Structure content for quick scanning with clear headings and bullet points
-- [ ] Avoid filler words (just, really, actually, basically, in order to)  
-- [ ] Avoid phrases that hide the subject (there is, there are)  
-- [ ] Avoid ambiguous pronouns (it, this, that)  
-- [ ] Avoid -ing verb forms when possible (using, having, going)  
-- [ ] Avoid culture-specific references or idioms (kill two birds with one stone, silver bullet)
 
+- [ ] **Use action verbs instead of passive voice**
+  ❌ *The model was trained on the dataset.*
+  ✅ *Train the model on the dataset.*
+
+- [ ] **Explain what the code does before presenting it**
+  Define the baseline models to use for forecasting:
+
+  ```python
+  models = [
+      HistoricAverage(),
+      Naive(),
+      SeasonalNaive(season_length = 4),
+      WindowAverage(window_size=4)
+  ]
+  ```
+
+- [ ] **Provide a clear explanation of the code immediately after presenting it**
+  This list includes four common baseline models:
+
+  * `HistoricAverage()`: Mean Forecast
+  * `Naive()`: Naive Forecast
+  * `SeasonalNaive(season_length=4)`: Seasonal Naive Forecast for quarterly seasonality
+  * `WindowAverage(window_size=4)`: Averages the last 4 quarters to forecast future values
+
+- [ ] **Avoid filler words (just, really, actually, basically, in order to)**
+  ❌ *You just need to install the library to get started.*
+  ✅ *Install the library to get started.*
+
+- [ ] **Avoid phrases that hide the subject (there is, there are)**
+  ❌ *There are several reasons to use Nixtla tools.*
+  ✅ *Nixtla tools offer several advantages.*
+
+- [ ] **Avoid ambiguous pronouns (it, this, that)**
+  ❌ *This improves accuracy.*
+  ✅ *The seasonal adjustment improves accuracy.*
+
+- [ ] **Avoid -ing verb forms when possible (using, having, going)**
+  ❌ *Using this model helps reduce error.*
+  ✅ *This model helps reduce error.*
+
+- [ ] **Avoid culture-specific references or idioms**
+  ❌ *There's no silver bullet for intermittent demand.*
+  ✅ *No single model solves all intermittent demand problems.*
+
+- [ ] **Structure content for quick scanning with clear headings and bullet points**
+- [ ] **Keep paragraphs short (2–4 sentences maximum)**
 
 ### Audience Assumptions Checklist
 
